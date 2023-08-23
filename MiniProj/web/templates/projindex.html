@@ -1,0 +1,135 @@
+<!DOCKTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Project HTML</title>
+	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h2>Controll Webpage</h2>
+		</div>
+		<div class="main">
+			<div>
+				<button style="background-color: rgb(200,200,200);" onclick="led_on()">LED ON</button>
+				<button style="background-color: rgb(200,200,200);" onclick="led_off()">LED OFF</button>
+			</div>
+		</div>
+		<div class="main">
+			<div>
+				<button style="background-color: rgb(123, 123, 188);" onclick="Ultrasonic_on()">Ultrasonic ON</button>
+				<button style="background-color: rgb(123, 123, 188);" onclick="Ultrasonic_off()">Ultrasonic OFF</button>
+			</div>
+		</div>
+		<div class="main">
+			<div>
+				<button style="background-color: rgb(222, 222, 222);" onclick="Buzzer_on()">Buzzer ON</button>
+				<button style="background-color: rgb(222, 222, 222);" onclick="Buzzer_off()">Buzzer OFF</button>
+			</div>
+		</div>
+		<div class="main">
+			<div>
+				<button style="background-color: rgb(90, 80, 70);" onclick="GPIO_CLEANUP()">GPIO_CLEANUP</button>
+			</div>
+		</div>
+		</div>
+		<div id="result">
+
+		</div>
+	</div>
+	<script>
+		function led_on(){
+			fetch("/led/on")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>LED is running</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>led_on error</h1>";
+					}
+				});
+		}
+		function led_off(){
+			fetch("/led/off")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>LED is stopping</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>led_off error</h1>";
+					}
+				});
+		}
+		function Ultrasonic_on(){
+			fetch("/sonic/on")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>Ultrasonic is running</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>sonic_on err</h1>";
+					}
+				});
+		}
+		function Ultrasonic_off(){
+			fetch("/sonic/off")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>Ultrasonic is stopped</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>sonic_off error</h1>";
+					}
+				});
+		}
+		function Buzzer_on(){
+			fetch("/bz/on")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>Buzzer is singing</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>bz_on error</h1>";
+					}
+				});
+		}			
+		function Buzzer_off() {
+			fetch("/bz/off")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>Buzzer is stopped</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>bz_off error</h1>";
+					}
+				});
+		}
+		function GPIO_CLEANUP(){
+			fetch("gpiocleanup")
+				.then(response=> response.text())
+				.then(data=> {
+					console.log(data);
+					let result = document.querySelector("#result");
+					if(data=="ok"){
+						result.innerHTML = "<h1 style='text-align: center;'>GPIO cleanup complete</h1>";
+					}else{
+						result.innerHTML = "<h1 style='text-align: center;'>something is wrong. cleanup fail</h1>";
+					}
+				});
+		}
+	</script>
+</body>
+</html>
