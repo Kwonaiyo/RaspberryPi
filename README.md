@@ -9,7 +9,7 @@
   개발언어 : Python, CSS, HTML, Javascript
   + Webpage를 통한 센서 제어
   + PyQt를 이용한 센서 제어
-## 1. Webpage를 통한 센서 제어
+### 1. Webpage를 통한 센서 제어
 + 웹페이지 구성 코드
 ```html
   <!DOCKTYPE html>
@@ -267,8 +267,116 @@ def GPIO_CLEANUP():
 if __name__ == "__main__":
 	app.run(host = "0.0.0.0", port = "5555")
 ```
+### 2. Qt GUI를 통한 센서 제어
++ 파이썬 코드
+```python
+import sys
+import RPi.GPIO as GPIO
+import time
+from PyQt5.QtWidgets import *
+from PyQt5 import uic
+
+form_class = uic.loadUiType("proj.ui")[0]
+
+GPIO.setmode(GPIO.BCM)
+
+#LED pins
+LED_A = 10
+LED_B = 9
+LED_C = 11
+GPIO.setup(LED_A, GPIO.OUT)
+GPIO.setup(LED_B, GPIO.OUT)
+GPIO.setup(LED_C, GPIO.OUT)
+
+#Ultrasonic pins
+TRIG = 23
+ECHO = 20
+GPIO.setup(TRIG, GPIO.OUT, initial=0)
+GPIO.setup(ECHO, GPIO.IN)
+
+#Buzzer pin
+BUZZ = 17
+GPIO.setup(BUZZ, GPIO.OUT, initial=0)
+
+WhileFlag = False
+
+class WindowClass(QMainWindow, form_class):
+	def __init__(self):
+		super().__init__()
+		self.setupUi(self)
+
+		self.btnLedOn.clicked.connect(self.fnLedOn)
+		self.btnLedOff.clicked.connect(self.fnLedOff)
+		self.btnGpioClear.clicked.connect(self.GPIOClear)
+		self.btnSonicOn.clicked.connect(self.uSonicOn)
+		self.btnSonicOff.clicked.connect(self.uSonicOff)
+		self.btnBuzOn.clicked.connect(self.BuzzerOn)
+		self.btnBuzOff.clicked.connect(self.BuzzerOff)
+
+	def GPIOClear(self):
+		GPIO.cleanup()
+		print("GPIO clear!")
+		
+	def fnLedOn(self):
+		GPIO.output(LED_A, 1)
+		GPIO.output(LED_B, 1)
+		GPIO.output(LED_C, 1)
+		print("LED ON Clicked")
+
+	def fnLedOff(self):
+		GPIO.output(LED_A, 0)
+		GPIO.output(LED_B, 0)
+		GPIO.output(LED_C, 0)
+		print("LED OFF Clicked")
+
+	def uSonicOn(self):
+		global WhileFlag
+		WhileFlag = True
+		try:
+			while WhileFlag:
+				GPIO.output(TRIG, True)
+				time.sleep(0.00001)
+				GPIO.output(TRIG, False)
+
+				while GPIO.input(ECHO) == 0:
+					start = time.time()
+					#print("A")
+				while GPIO.input(ECHO) == 1:
+					stop = time.time()
+					#print("B")
+					
+				check_time = stop - start
+				distance = check_time/2 * 34300
+				print("Distance : %.1f cm" % distance)
+				time.sleep(0.4)
+				QApplication.processEvents()
+		except:
+			print("error")
+			sys.exit()
+	#	pass
+
+	def uSonicOff(self):
+		global WhileFlag
+		WhileFlag = False
+		print("uSonicOff")
+
+	def BuzzerOn(self):
+		print("Buzzer ON")
+		GPIO.output(BUZZ, 1)
+
+	def BuzzerOff(self):
+		print("Buzzer OFF")
+		GPIO.output(BUZZ, 0)
+
+if __name__ == "__main__":
+	app = QApplication(sys.argv)
+	myWindow = WindowClass()
+	myWindow.show()
+	app.exec_()
+```
+
 + 프로젝트 진행하면서 힘들었던 점?
-  - Ultrasensor가 거리 데이터를 받아오지 않아서 꽤나 고생했다..
+  - Ultrasensor가 거리 데이터를 받아오지 않아서 꽤나 고생했다.
     + 코드도 여러 번 확인해 봤으나 문제가 없었고, 라즈베리의 GPIO 핀을 바꿔봐도, 전선을 바꿔봐도, 작동 잘 되는 다른 센서로 바꿔봐도 해결되지 않았었다. => 알고보니 내가 바꿔본 전선들이 전부 불량이었다...
   - Ultrasensor가 받아온 데이터를 웹페이지로 보내주는 문제
     + 파이썬 파일에서 코드를 실행할 때는 print를 이용해서 출력해주면 됐었는데 Flask 서버에 데이터를 보내서 웹에서 보여주고 싶었으나 해결 방법을 찾지 못했다.
