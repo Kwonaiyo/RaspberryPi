@@ -9,6 +9,21 @@
   개발언어 : Python, CSS, HTML, Javascript
   + Webpage를 통한 센서 제어
   + PyQt를 이용한 센서 제어
+
++ 이미지<br>
+  - 웹페이지<br>
+![웹페이지](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/%EC%9B%B9%ED%8E%98%EC%9D%B4%EC%A7%80.PNG)
+  - LED 동작버튼 클릭 시<br>
+![LED동작시메시지](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/LED%20%EB%8F%99%EC%9E%91%EC%8B%9C%20%EB%A9%94%EC%8B%9C%EC%A7%80%20%ED%91%9C%EC%8B%9C.PNG)
+  - LED가 켜진 모습<br>
+![LED동작사진](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/LED%20%EB%8F%99%EC%9E%91%EC%82%AC%EC%A7%84.jpg)
+  - Ultrasensor가 데이터 받아오는 모습<br>
+![Ultra작동](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/Ultrasonic%20%EC%9E%91%EB%8F%99%EC%8B%9C%20%EC%B6%9C%EB%A0%A5%ED%99%94%EB%A9%B4.PNG)
+  - QT 화면 구성<br>
+![QT화면](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/qt%20%ED%99%94%EB%A9%B4.png)
+  - 브래드보드 결선<br>
+![브래드보드결선](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%20%ED%8C%8C%EC%9D%B4%20%EB%B0%8F%20%EB%B8%8C%EB%A0%88%EB%93%9C%EB%B3%B4%EB%93%9C%20%EA%B2%B0%EC%84%A0.jpg)
+
 ### 1. Webpage를 통한 센서 제어
 + 웹페이지 구성 코드
 ```html
@@ -374,19 +389,7 @@ if __name__ == "__main__":
 	myWindow.show()
 	app.exec_()
 ```
-+ 이미지<br>
-  - 웹페이지<br>
-![웹페이지](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/%EC%9B%B9%ED%8E%98%EC%9D%B4%EC%A7%80.PNG)
-  - LED 동작버튼 클릭 시<br>
-![LED동작시메시지](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/LED%20%EB%8F%99%EC%9E%91%EC%8B%9C%20%EB%A9%94%EC%8B%9C%EC%A7%80%20%ED%91%9C%EC%8B%9C.PNG)
-  - LED가 켜진 모습<br>
-![LED동작사진](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/LED%20%EB%8F%99%EC%9E%91%EC%82%AC%EC%A7%84.jpg)
-  - Ultrasensor가 데이터 받아오는 모습<br>
-![Ultra작동](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/Ultrasonic%20%EC%9E%91%EB%8F%99%EC%8B%9C%20%EC%B6%9C%EB%A0%A5%ED%99%94%EB%A9%B4.PNG)
-  - QT 화면 구성<br>
-![QT화면](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/qt%20%ED%99%94%EB%A9%B4.png)
-  - 브래드보드 결선<br>
-![브래드보드결선](https://github.com/Kwonaiyo/RaspberryPi/blob/main/images/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%20%ED%8C%8C%EC%9D%B4%20%EB%B0%8F%20%EB%B8%8C%EB%A0%88%EB%93%9C%EB%B3%B4%EB%93%9C%20%EA%B2%B0%EC%84%A0.jpg)
+
 + 프로젝트 진행하면서 힘들었던 점?
   - Ultrasensor가 거리 데이터를 받아오지 않아서 꽤나 고생했다.
     + 코드도 여러 번 확인해 봤으나 문제가 없었고, 라즈베리의 GPIO 핀을 바꿔봐도, 전선을 바꿔봐도, 작동 잘 되는 다른 센서로 바꿔봐도 해결되지 않았었다. => 알고보니 내가 바꿔본 전선들이 전부 불량이었다...
